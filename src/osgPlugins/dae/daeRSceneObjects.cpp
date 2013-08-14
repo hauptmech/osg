@@ -13,7 +13,7 @@
 
 #include "daeReader.h"
 #include <dae.h>
-#include <dae/domAny.h>
+#include <dom/domAny.h>
 #include <dom/domCOLLADA.h>
 
 #include <osg/Switch>
@@ -28,8 +28,9 @@
 #include <osg/LightModel>
 
 using namespace osgDAE;
+using namespace ColladaDOM141;
 
-osg::Group* daeReader::processOsgMultiSwitch(domTechnique* teq)
+osg::Group* daeReader::processOsgMultiSwitch(ColladaDOM141::domTechnique* teq)
 {
     osgSim::MultiSwitch* msw = new osgSim::MultiSwitch;
 

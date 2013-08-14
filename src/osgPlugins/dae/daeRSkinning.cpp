@@ -13,7 +13,7 @@
 
 #include "daeReader.h"
 #include <dae.h>
-#include <dae/domAny.h>
+#include <dom/domAny.h>
 #include <dom/domCOLLADA.h>
 #include <dom/domInstanceWithExtra.h>
 #include <dom/domConstants.h>
@@ -23,8 +23,9 @@
 #include <osgAnimation/UpdateMatrixTransform>
 
 using namespace osgDAE;
+using namespace ColladaDOM141;
 
-domNode* daeReader::getRootJoint(domNode* joint) const
+ColladaDOM141::domNode* daeReader::getRootJoint(domNode* joint) const
 {
     int depth = 0;
     while (domNode* parent = daeSafeCast<domNode>(joint->getParent()))

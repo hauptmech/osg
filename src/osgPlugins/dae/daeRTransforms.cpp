@@ -13,7 +13,7 @@
 
 #include "daeReader.h"
 #include <dae.h>
-#include <dae/domAny.h>
+#include <dom/domAny.h>
 #include <dom/domCOLLADA.h>
 
 #include <osgAnimation/UpdateMatrixTransform>
@@ -25,6 +25,7 @@
 #include <osgSim/DOFTransform>
 
 using namespace osgDAE;
+using namespace ColladaDOM141;
 
 // Note <lookat>, <matrix>, <rotate>, <scale>, <skew> and <translate> may appear in any order
 // These transformations can be combined in any number and ordering to produce the desired

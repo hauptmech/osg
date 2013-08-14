@@ -16,6 +16,7 @@
 #include <dom/domSource.h>
 
 using namespace osgDAE;
+using namespace ColladaDOM141;
 
 domSourceReader::domSourceReader() : m_array_type( None ), m_count( 0 ), srcInit( NULL )//, initialized( false )
 {}

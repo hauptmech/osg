@@ -25,6 +25,7 @@
 #include <sstream>
 
 using namespace osgDAE;
+using namespace ColladaDOM141;
 
 
 unsigned int daeWriter::ArrayNIndices::getDAESize()

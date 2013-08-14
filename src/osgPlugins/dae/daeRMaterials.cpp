@@ -16,7 +16,7 @@
 
 #include <dae.h>
 #include <dae/daeSIDResolver.h>
-#include <dae/domAny.h>
+#include <dom/domAny.h>
 #include <dom/domCOLLADA.h>
 #include <dom/domProfile_COMMON.h>
 #include <dom/domConstants.h>
@@ -32,6 +32,7 @@
 #include <sstream>
 
 using namespace osgDAE;
+using namespace ColladaDOM141;
 
 template <typename T>
 void daeReader::getTransparencyCounts(daeDatabase* database, int& zero, int& one) const

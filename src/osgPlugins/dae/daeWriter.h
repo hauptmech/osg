@@ -51,23 +51,6 @@
 #include <dom/domChannel.h>
 
 
-class domCOLLADA;
-class domGeometry;
-class domInstance_geometry;
-class domLibrary_cameras;
-class domLibrary_effects;
-class domLibrary_geometries;
-class domLibrary_lights;
-class domLibrary_materials;
-class domLibrary_visual_scenes;
-class domLibrary_animations;
-class domMaterial;
-class domMesh;
-class domNode;
-class domSource;
-class domVisual_scene;
-class domP;
-
 namespace osgDAE {
 
 /// Convert value to string using it's stream operator
@@ -202,13 +185,13 @@ protected: //methods
 
     void debugPrint( osg::Node &node );
 
-    domGeometry* getOrCreateDomGeometry(osg::Geometry* pOsgGeometry);
-    bool processGeometry( osg::Geometry *geom, domGeometry *geo, const std::string &name );
-    domSource* createSource( daeElement *parent, const std::string &baseName, int size, bool color = false, bool uv = false );
+    ColladaDOM141::domGeometry* getOrCreateDomGeometry(osg::Geometry* pOsgGeometry);
+    bool processGeometry( osg::Geometry *geom, ColladaDOM141::domGeometry *geo, const std::string &name );
+    ColladaDOM141::domSource* createSource( daeElement *parent, const std::string &baseName, int size, bool color = false, bool uv = false );
     template < typename Ty >
-        Ty *createPrimGroup( daeString type, domMesh *mesh, domSource *norm, domSource *color, const std::vector< domSource* > &texcoord );
+        Ty *createPrimGroup( daeString type, ColladaDOM141::domMesh *mesh, ColladaDOM141::domSource *norm, ColladaDOM141::domSource *color, const std::vector< ColladaDOM141::domSource* > &texcoord );
 
-    void processMaterial( osg::StateSet *ss, domBind_material *pDomBindMaterial, const std::string &geoName );
+    void processMaterial( osg::StateSet *ss, ColladaDOM141::domBind_material *pDomBindMaterial, const std::string &geoName );
 
     void createAssetTag(bool isZUpAxis);
 
@@ -223,17 +206,17 @@ protected: //methods
 protected: //members
     DAE *dae;
     daeDocument *doc;
-    domCOLLADA *dom;
-    domLibrary_cameras *lib_cameras;
-    domLibrary_effects *lib_effects;
-    domLibrary_controllers *lib_controllers;
-    domLibrary_geometries *lib_geoms;
-    domLibrary_lights *lib_lights;
-    domLibrary_materials *lib_mats;
-    domLibrary_visual_scenes *lib_vis_scenes;
-    domLibrary_animations* _domLibraryAnimations;
-    domNode *currentNode;
-    domVisual_scene *vs;
+    ColladaDOM141::domCOLLADA *dom;
+    ColladaDOM141::domLibrary_cameras *lib_cameras;
+    ColladaDOM141::domLibrary_effects *lib_effects;
+    ColladaDOM141::domLibrary_controllers *lib_controllers;
+    ColladaDOM141::domLibrary_geometries *lib_geoms;
+    ColladaDOM141::domLibrary_lights *lib_lights;
+    ColladaDOM141::domLibrary_materials *lib_mats;
+    ColladaDOM141::domLibrary_visual_scenes *lib_vis_scenes;
+    ColladaDOM141::domLibrary_animations* _domLibraryAnimations;
+    ColladaDOM141::domNode *currentNode;
+    ColladaDOM141::domVisual_scene *vs;
 
     bool success;
     unsigned int lastDepth;
@@ -248,11 +231,11 @@ protected: //members
   };
 
 
-    typedef std::map< osg::ref_ptr<osg::StateSet>, domMaterial *, CompareStateSet> MaterialMap;
+    typedef std::map< osg::ref_ptr<osg::StateSet>, ColladaDOM141::domMaterial *, CompareStateSet> MaterialMap;
     typedef std::stack<osg::ref_ptr<osg::StateSet> > StateSetStack;
-    typedef std::map< osg::Geometry*, domGeometry *> OsgGeometryDomGeometryMap;
-    typedef std::map< osgAnimation::RigGeometry*, domController *> OsgRigGeometryDomControllerMap;
-    typedef std::map< osgAnimation::MorphGeometry*, domController *> OsgMorphGeometryDomControllerMap;
+    typedef std::map< osg::Geometry*, ColladaDOM141::domGeometry *> OsgGeometryDomGeometryMap;
+    typedef std::map< osgAnimation::RigGeometry*, ColladaDOM141::domController *> OsgRigGeometryDomControllerMap;
+    typedef std::map< osgAnimation::MorphGeometry*, ColladaDOM141::domController *> OsgMorphGeometryDomControllerMap;
 
     std::map< std::string, int > uniqueNames;
     OsgGeometryDomGeometryMap geometryMap;
@@ -294,7 +277,7 @@ protected: //inner classes
         unsigned int getDAESize();
 
         /// Appends the contained OSG vector array to a domListOfFloats
-        bool append(domListOfFloats & list);
+        bool append(ColladaDOM141::domListOfFloats & list);
     protected:
         Mode mode;
     };
@@ -303,10 +286,10 @@ private: //members
 
         /** append elements (verts, normals, colors and texcoord) for file write */
         void appendGeometryIndices(osg::Geometry *geom,
-                                          domP * p,
+                                          ColladaDOM141::domP * p,
                                           unsigned int vindex,
-                                          domSource * norm,
-                                          domSource * color,
+                                          ColladaDOM141::domSource * norm,
+                                          ColladaDOM141::domSource * color,
                                           const ArrayNIndices & verts,
                                           const ArrayNIndices & normals,
                                           const ArrayNIndices & colors,

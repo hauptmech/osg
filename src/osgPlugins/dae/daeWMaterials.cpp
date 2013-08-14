@@ -14,7 +14,7 @@
 #include "daeWriter.h"
 #include "ReaderWriterDAE.h"
 
-#include <dae/domAny.h>
+#include <dom/domAny.h>
 #include <dom/domCOLLADA.h>
 #include <dom/domConstants.h>
 #include <dom/domProfile_COMMON.h>
@@ -32,7 +32,7 @@
 #endif
 
 using namespace osgDAE;
-
+using namespace ColladaDOM141;
 
 void daeWriter::processMaterial( osg::StateSet *ss, domBind_material *pDomBindMaterial, const std::string &geoName )
 {

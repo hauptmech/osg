@@ -17,12 +17,13 @@
 
 #include <dom/domNode.h>
 #include <dom/domConstants.h>
-#include <dae/domAny.h>
+#include <dom/domAny.h>
 
 #include <osgAnimation/Bone>
 #include <osgSim/DOFTransform>
 
 using namespace osgDAE;
+using namespace ColladaDOM141;
 
 
 void daeWriter::writeUpdateTransformElements(const osg::Vec3 &pos, const osg::Quat &q,    const osg::Vec3 &s)

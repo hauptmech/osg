@@ -19,7 +19,7 @@
 #include <dom/domConstants.h>
 #include <dom/domLibrary_cameras.h>
 #include <dom/domLibrary_lights.h>
-#include <dae/domAny.h>
+#include <dom/domAny.h>
 //#include <dom/domVisual_scene.h>
 //#include <dom/domLibrary_visual_scenes.h>
 
@@ -29,6 +29,7 @@
 #include <osg/CameraView>
 
 using namespace osgDAE;
+using namespace ColladaDOM141;
 
 // Write non-standard node data as extra of type "Node" with "OpenSceneGraph" technique
 void daeWriter::writeNodeExtra(osg::Node &node)

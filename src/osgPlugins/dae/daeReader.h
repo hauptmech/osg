@@ -22,6 +22,7 @@
 #include <dom/domCommon_color_or_texture_type.h>
 #include <dom/domInputLocalOffset.h>
 #include <dom/domInstance_controller.h>
+#include <dom/domTypes.h>
 
 #include <osg/Node>
 #include <osg/Notify>
@@ -35,25 +36,7 @@
 #include <osgAnimation/Bone>
 #include <osgAnimation/Skeleton>
 
-class domBind_material;
-class domCamera;
-//class domCommon_color_or_texture_type;
-class domCommon_float_or_param_type;
-class domGeometry;
-class domInstance_controller;
-class domInstance_geometry;
-class domInstanceWithExtra;
-class domLight;
-class domLookat;
-class domMatrix;
-class domNode;
-class domP;
-class domProfile_COMMON;
-class domScale;
-class domSkew;
-class domTranslate;
-class domRotate;
-class domVisual_scene;
+
 
 namespace osgDAE
 {
@@ -159,7 +142,7 @@ public:
 
     const std::string& getAssetUnitName() const {return _assetUnitName;}
     float getAssetUnitMeter() const {return _assetUnitMeter;}
-    domUpAxisType getAssetUpAxis() const {return _assetUp_axis;}
+    ColladaDOM141::domUpAxisType getAssetUpAxis() const {return _assetUp_axis;}
 
     enum TextureUnitUsage
     {
@@ -200,7 +183,7 @@ public:
         TextureParameters()
             : wrap_s(osg::Texture::REPEAT), wrap_t(osg::Texture::REPEAT),
             filter_min(osg::Texture::LINEAR_MIPMAP_LINEAR), filter_mag(osg::Texture::LINEAR),
-            transparent(false), opaque(FX_OPAQUE_ENUM_A_ONE), transparency(1.0f)
+            transparent(false), opaque(ColladaDOM141::FX_OPAQUE_ENUM_A_ONE), transparency(1.0f)
         {}
 
         bool operator < (const TextureParameters& rhs) const
@@ -225,7 +208,7 @@ public:
         //The following parameters are for transparency textures, to handle
         //COLLADA's horrible transparency spec.
         bool transparent;
-        domFx_opaque_enum opaque;
+        ColladaDOM141::domFx_opaque_enum opaque;
         float transparency;
     };
 
@@ -237,13 +220,13 @@ public:
         InterpolationType interpolation;
     };
 
-    typedef std::map<domGeometry*, osg::ref_ptr<osg::Geode> >    domGeometryGeodeMap;
-    typedef std::map<domMaterial*, osg::ref_ptr<osg::StateSet> > domMaterialStateSetMap;
+    typedef std::map<ColladaDOM141::domGeometry*, osg::ref_ptr<osg::Geode> >    domGeometryGeodeMap;
+    typedef std::map<ColladaDOM141::domMaterial*, osg::ref_ptr<osg::StateSet> > domMaterialStateSetMap;
     typedef std::map<std::string, osg::ref_ptr<osg::StateSet> >    MaterialStateSetMap;
-    typedef std::multimap< daeElement*, domChannel*> daeElementDomChannelMap;
-    typedef std::map<domChannel*, osg::ref_ptr<osg::NodeCallback> > domChannelOsgAnimationUpdateCallbackMap;
-    typedef std::map<domNode*, osg::ref_ptr<osgAnimation::Bone> > domNodeOsgBoneMap;
-    typedef std::map<domNode*, osg::ref_ptr<osgAnimation::Skeleton> > domNodeOsgSkeletonMap;
+    typedef std::multimap< daeElement*, ColladaDOM141::domChannel*> daeElementDomChannelMap;
+    typedef std::map<ColladaDOM141::domChannel*, osg::ref_ptr<osg::NodeCallback> > domChannelOsgAnimationUpdateCallbackMap;
+    typedef std::map<ColladaDOM141::domNode*, osg::ref_ptr<osgAnimation::Bone> > domNodeOsgBoneMap;
+    typedef std::map<ColladaDOM141::domNode*, osg::ref_ptr<osgAnimation::Skeleton> > domNodeOsgSkeletonMap;
     typedef std::map<TextureParameters, osg::ref_ptr<osg::Texture2D> > TextureParametersMap;
     typedef std::map<std::pair<const osg::StateSet*, TextureUnitUsage>, std::string> TextureToCoordSetMap;
     typedef std::map<std::string, size_t> IdToCoordIndexMap;
@@ -253,7 +236,7 @@ public:
     typedef std::map< int, osg::Array*, std::less<int> > ArrayMap;
 
     typedef std::multimap< osgAnimation::Target*, osg::ref_ptr<ChannelPart> > TargetChannelPartMap;
-    typedef std::multimap<std::pair<const domMesh*, unsigned>, std::pair<osg::ref_ptr<osg::Geometry>, GLuint> > OldToNewIndexMap;
+    typedef std::multimap<std::pair<const ColladaDOM141::domMesh*, unsigned>, std::pair<osg::ref_ptr<osg::Geometry>, GLuint> > OldToNewIndexMap;
 
 private:
     bool processDocument( const std::string& );
@@ -265,9 +248,9 @@ private:
 
      //scene processing
     osg::Group* turnZUp();
-    osg::Group*    processVisualScene( domVisual_scene *scene );
-    osg::Node*    processNode( domNode *node, bool skeleton );
-    osg::Transform*    processOsgMatrixTransform( domNode *node, bool isBone);
+    osg::Group*    processVisualScene( ColladaDOM141::domVisual_scene *scene );
+    osg::Node*    processNode( ColladaDOM141::domNode *node, bool skeleton );
+    osg::Transform*    processOsgMatrixTransform( ColladaDOM141::domNode *node, bool isBone);
 
     template <typename T>
     inline void getTransparencyCounts(daeDatabase*, int& zero, int& one) const;
@@ -280,114 +263,114 @@ private:
     heuristically decides which way the values should be interpreted.*/
     bool findInvertTransparency(daeDatabase*) const;
 
-    osgAnimation::BasicAnimationManager* processAnimationLibraries(domCOLLADA* document);
-    void processAnimationClip(osgAnimation::BasicAnimationManager* pOsgAnimationManager, domAnimation_clip* pDomAnimationClip);
+    osgAnimation::BasicAnimationManager* processAnimationLibraries(ColladaDOM141::domCOLLADA* document);
+    void processAnimationClip(osgAnimation::BasicAnimationManager* pOsgAnimationManager, ColladaDOM141::domAnimation_clip* pDomAnimationClip);
     void processAnimationMap(const TargetChannelPartMap&, osgAnimation::Animation* pOsgAnimation);
-    ChannelPart* processSampler(domChannel* pDomChannel, SourceMap &sources);
-    void processAnimationChannels(domAnimation* pDomAnimation, TargetChannelPartMap& tcm);
-    void processChannel(domChannel* pDomChannel, SourceMap &sources, TargetChannelPartMap& tcm);
+    ChannelPart* processSampler(ColladaDOM141::domChannel* pDomChannel, SourceMap &sources);
+    void processAnimationChannels(ColladaDOM141::domAnimation* pDomAnimation, TargetChannelPartMap& tcm);
+    void processChannel(ColladaDOM141::domChannel* pDomChannel, SourceMap &sources, TargetChannelPartMap& tcm);
     void extractTargetName(const std::string&, std::string&, std::string&, std::string&);
 
     // Processing of OSG specific info stored in node extras
-    osg::Group* processExtras(domNode *node);
-    void processNodeExtra(osg::Node* osgNode, domNode *node);
-    domTechnique* getOpenSceneGraphProfile(domExtra* extra);
-    void processAsset( domAsset *node );
+    osg::Group* processExtras(ColladaDOM141::domNode *node);
+    void processNodeExtra(osg::Node* osgNode, ColladaDOM141::domNode *node);
+    ColladaDOM141::domTechnique* getOpenSceneGraphProfile(ColladaDOM141::domExtra* extra);
+    void processAsset( ColladaDOM141::domAsset *node );
 
-    osg::Group* processOsgSwitch(domTechnique* teq);
-    osg::Group* processOsgMultiSwitch(domTechnique* teq);
-    osg::Group* processOsgLOD(domTechnique* teq);
-    osg::Group* processOsgDOFTransform(domTechnique* teq);
-    osg::Group* processOsgSequence(domTechnique* teq);
+    osg::Group* processOsgSwitch(ColladaDOM141::domTechnique* teq);
+    osg::Group* processOsgMultiSwitch(ColladaDOM141::domTechnique* teq);
+    osg::Group* processOsgLOD(ColladaDOM141::domTechnique* teq);
+    osg::Group* processOsgDOFTransform(ColladaDOM141::domTechnique* teq);
+    osg::Group* processOsgSequence(ColladaDOM141::domTechnique* teq);
 
     // geometry processing
-    osg::Geode* getOrCreateGeometry(domGeometry *geom, domBind_material* pDomBindMaterial, const osg::Geode** ppOriginalGeode = NULL);
-    osgAnimation::Bone* getOrCreateBone(domNode *pDomNode);
-    osgAnimation::Skeleton* getOrCreateSkeleton(domNode *pDomNode);
-    osg::Geode* processInstanceGeometry( domInstance_geometry *ig );
+    osg::Geode* getOrCreateGeometry(ColladaDOM141::domGeometry *geom, ColladaDOM141::domBind_material* pDomBindMaterial, const osg::Geode** ppOriginalGeode = NULL);
+    osgAnimation::Bone* getOrCreateBone(ColladaDOM141::domNode *pDomNode);
+    osgAnimation::Skeleton* getOrCreateSkeleton(ColladaDOM141::domNode *pDomNode);
+    osg::Geode* processInstanceGeometry( ColladaDOM141::domInstance_geometry *ig );
 
-    osg::Geode* processMesh(domMesh* pDomMesh);
-    osg::Geode* processConvexMesh(domConvex_mesh* pDomConvexMesh);
-    osg::Geode* processSpline(domSpline* pDomSpline);
-    osg::Geode* processGeometry(domGeometry *pDomGeometry);
+    osg::Geode* processMesh(ColladaDOM141::domMesh* pDomMesh);
+    osg::Geode* processConvexMesh(ColladaDOM141::domConvex_mesh* pDomConvexMesh);
+    osg::Geode* processSpline(ColladaDOM141::domSpline* pDomSpline);
+    osg::Geode* processGeometry(ColladaDOM141::domGeometry *pDomGeometry);
 
-    typedef std::vector<domInstance_controller*> domInstance_controllerList;
+    typedef std::vector<ColladaDOM141::domInstance_controller*> domInstance_controllerList;
 
     void processSkins();
     //Process skins attached to one skeleton
-    void processSkeletonSkins(domNode* skeletonRoot, const domInstance_controllerList&);
-    void processSkin(domSkin* pDomSkin, domNode* skeletonRoot, osgAnimation::Skeleton*, domBind_material* pDomBindMaterial);
-    osg::Node* processMorph(domMorph* pDomMorph, domBind_material* pDomBindMaterial);
-    osg::Node* processInstanceController( domInstance_controller *ictrl );
+    void processSkeletonSkins(ColladaDOM141::domNode* skeletonRoot, const domInstance_controllerList&);
+    void processSkin(ColladaDOM141::domSkin* pDomSkin, ColladaDOM141::domNode* skeletonRoot, osgAnimation::Skeleton*, ColladaDOM141::domBind_material* pDomBindMaterial);
+    osg::Node* processMorph(ColladaDOM141::domMorph* pDomMorph, ColladaDOM141::domBind_material* pDomBindMaterial);
+    osg::Node* processInstanceController( ColladaDOM141::domInstance_controller *ictrl );
 
     template< typename T >
-    void processSinglePPrimitive(osg::Geode* geode, const domMesh* pDomMesh, const T* group, SourceMap& sources, GLenum mode);
+    void processSinglePPrimitive(osg::Geode* geode, const ColladaDOM141::domMesh* pDomMesh, const T* group, SourceMap& sources, GLenum mode);
 
     template< typename T >
-    void processMultiPPrimitive(osg::Geode* geode, const domMesh* pDomMesh, const T* group, SourceMap& sources, GLenum mode);
+    void processMultiPPrimitive(osg::Geode* geode, const ColladaDOM141::domMesh* pDomMesh, const T* group, SourceMap& sources, GLenum mode);
 
-    void processPolylist(osg::Geode* geode, const domMesh* pDomMesh, const domPolylist *group, SourceMap &sources, TessellateMode tessellateMode);
+    void processPolylist(osg::Geode* geode, const ColladaDOM141::domMesh* pDomMesh, const ColladaDOM141::domPolylist *group, SourceMap &sources, TessellateMode tessellateMode);
 
     template< typename T >
-    void processPolygons(osg::Geode* geode, const domMesh* pDomMesh, const T *group, SourceMap &sources, GLenum mode, TessellateMode tessellateMode);
+    void processPolygons(osg::Geode* geode, const ColladaDOM141::domMesh* pDomMesh, const T *group, SourceMap &sources, GLenum mode, TessellateMode tessellateMode);
 
-    void resolveMeshArrays(const domP_Array&,
-        const domInputLocalOffset_Array& inputs, const domMesh* pDomMesh,
+    void resolveMeshArrays(const ColladaDOM141::domP_Array&,
+        const ColladaDOM141::domInputLocalOffset_Array& inputs, const ColladaDOM141::domMesh* pDomMesh,
         osg::Geometry* geometry, SourceMap &sources,
         std::vector<std::vector<GLuint> >& vertexLists);
 
     //material/effect processing
-    void processBindMaterial( domBind_material *bm, domGeometry *geom, osg::Geode *geode, osg::Geode *cachedGeode );
-    void processMaterial(osg::StateSet *ss, domMaterial *mat );
-    void processEffect(osg::StateSet *ss, domEffect *effect );
-    void processProfileCOMMON(osg::StateSet *ss, domProfile_COMMON *pc );
+    void processBindMaterial( ColladaDOM141::domBind_material *bm, ColladaDOM141::domGeometry *geom, osg::Geode *geode, osg::Geode *cachedGeode );
+    void processMaterial(osg::StateSet *ss, ColladaDOM141::domMaterial *mat );
+    void processEffect(osg::StateSet *ss, ColladaDOM141::domEffect *effect );
+    void processProfileCOMMON(osg::StateSet *ss, ColladaDOM141::domProfile_COMMON *pc );
     bool processColorOrTextureType(const osg::StateSet*,
-                                    domCommon_color_or_texture_type *cot,
+                                      ColladaDOM141::domCommon_color_or_texture_type *cot,
                                     osg::Material::ColorMode channel,
                                     osg::Material *mat,
-                                    domCommon_float_or_param_type *fop = NULL,
+                                    ColladaDOM141::domCommon_float_or_param_type *fop = NULL,
                                     osg::Texture2D **sa = NULL,
                                     bool normalizeShininess=false);
-    void processTransparencySettings( domCommon_transparent_type *ctt,
-                                        domCommon_float_or_param_type *pTransparency,
+    void processTransparencySettings( ColladaDOM141::domCommon_transparent_type *ctt,
+                                        ColladaDOM141::domCommon_float_or_param_type *pTransparency,
                                         osg::StateSet*,
                                         osg::Material *material,
                                         unsigned int diffuseTextureUnit );
-    bool GetFloat4Param(xsNCName Reference, domFloat4 &f4) const;
-    bool GetFloatParam(xsNCName Reference, domFloat &f) const;
+    bool GetFloat4Param(xsNCName Reference, ColladaDOM141::domFloat4 &f4) const;
+    bool GetFloatParam(xsNCName Reference, ColladaDOM141::domFloat &f) const;
 
-    std::string processImagePath(const domImage*) const;
-    osg::Image* processImageTransparency(const osg::Image*, domFx_opaque_enum, float transparency) const;
-    osg::Texture2D* processTexture( domCommon_color_or_texture_type_complexType::domTexture *tex, const osg::StateSet*, TextureUnitUsage, domFx_opaque_enum = FX_OPAQUE_ENUM_A_ONE, float transparency = 1.0f);
-    bool copyTextureCoordinateSet(const osg::StateSet* ss, const osg::Geometry* cachedGeometry, osg::Geometry* clonedGeometry, const domInstance_material* im, TextureUnitUsage tuu, unsigned int textureUnit);
+    std::string processImagePath(const ColladaDOM141::domImage*) const;
+    osg::Image* processImageTransparency(const osg::Image*, ColladaDOM141::domFx_opaque_enum, float transparency) const;
+    osg::Texture2D* processTexture( ColladaDOM141::domCommon_color_or_texture_type_complexType::domTexture *tex, const osg::StateSet*, TextureUnitUsage, ColladaDOM141::domFx_opaque_enum = ColladaDOM141::FX_OPAQUE_ENUM_A_ONE, float transparency = 1.0f);
+    bool copyTextureCoordinateSet(const osg::StateSet* ss, const osg::Geometry* cachedGeometry, osg::Geometry* clonedGeometry, const ColladaDOM141::domInstance_material* im, TextureUnitUsage tuu, unsigned int textureUnit);
 
     //scene objects
-    osg::Node* processLight( domLight *dlight );
-    osg::Node* processCamera( domCamera *dcamera );
+    osg::Node* processLight( ColladaDOM141::domLight *dlight );
+    osg::Node* processCamera( ColladaDOM141::domCamera *dcamera );
 
-    domNode* getRootJoint(domNode*) const;
-    domNode* findJointNode(daeElement* searchFrom, domInstance_controller*) const;
-    domNode* findSkeletonNode(daeElement* searchFrom, domInstance_controller*) const;
+    ColladaDOM141::domNode* getRootJoint(ColladaDOM141::domNode*) const;
+    ColladaDOM141::domNode* findJointNode(daeElement* searchFrom, ColladaDOM141::domInstance_controller*) const;
+    ColladaDOM141::domNode* findSkeletonNode(daeElement* searchFrom, ColladaDOM141::domInstance_controller*) const;
 
     /// Return whether the node is used as a bone. Note that while many files
     /// identify joints with type="JOINT", some don't do this, while others
     /// incorrectly identify every node as a joint.
-    bool isJoint(const domNode* node) const {return _jointSet.find(node) != _jointSet.end();}
+    bool isJoint(const ColladaDOM141::domNode* node) const {return _jointSet.find(node) != _jointSet.end();}
 
 private:
 
     DAE *_dae;
     osg::Node* _rootNode;
     osg::ref_ptr<osg::StateSet> _rootStateSet;
-    domCOLLADA* _document;
-    domVisual_scene* _visualScene;
+    ColladaDOM141::domCOLLADA* _document;
+    ColladaDOM141::domVisual_scene* _visualScene;
 
     std::map<std::string,bool> _targetMap;
 
     int _numlights;
 
-    domInstance_effect *_currentInstance_effect;
-    domEffect *_currentEffect;
+    ColladaDOM141::domInstance_effect *_currentInstance_effect;
+    ColladaDOM141::domEffect *_currentEffect;
 
     /// Maps an animated element to a domchannel to quickly find which animation influence this element
     // TODO a single element can be animated by multiple channels (with different members like translate.x or morphweights(2) )
@@ -397,7 +380,7 @@ private:
     /// Maps geometry to a Geode
     domGeometryGeodeMap _geometryMap;
     /// All nodes in the document that are used as joints.
-    std::set<const domNode*> _jointSet;
+    std::set<const ColladaDOM141::domNode*> _jointSet;
     /// Maps a node (of type joint) to a osgAnimation::Bone
     domNodeOsgBoneMap _jointMap;
     /// Maps a node (of type joint) to a osgAnimation::Skeleton
@@ -419,7 +402,7 @@ private:
     // Additional Information
     std::string _assetUnitName;
     float _assetUnitMeter;
-    domUpAxisType _assetUp_axis;
+    ColladaDOM141::domUpAxisType _assetUp_axis;
 };
 
 }

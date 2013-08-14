@@ -32,6 +32,8 @@
 
 #define SERIALIZER() OpenThreads::ScopedLock<OpenThreads::ReentrantMutex> lock(_serializerMutex)
 
+using namespace ColladaDOM141;
+
 osgDB::ReaderWriter::ReadResult
 ReaderWriterDAE::readNode(std::istream& fin,
         const osgDB::ReaderWriter::Options* options) const

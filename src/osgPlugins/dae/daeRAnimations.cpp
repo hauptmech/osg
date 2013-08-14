@@ -1,7 +1,7 @@
 #include "daeReader.h"
 #include "domSourceReader.h"
 #include <dae.h>
-#include <dae/domAny.h>
+#include <dom/domAny.h>
 #include <dom/domCOLLADA.h>
 #include <dom/domConstants.h>
 
@@ -13,14 +13,14 @@
 #include <osgAnimation/UpdateMatrixTransform>
 
 using namespace osgDAE;
-
+using namespace ColladaDOM141;
 
 // Mapping Collada animations to Osg animations
 // domAnimation ->  osgAnimation::Animation
 // domSampler   ->  osgAnimation::Channel
 // domSource    ->  osgAnimation::Channel.Sampler
 // domChannel   ->  osgAnimation::Channel.TargetName
-osgAnimation::BasicAnimationManager* daeReader::processAnimationLibraries(domCOLLADA* document)
+osgAnimation::BasicAnimationManager* daeReader::processAnimationLibraries(ColladaDOM141::domCOLLADA* document)
 {
     domLibrary_animation_clips_Array domAnimationClipsLibraries = document->getLibrary_animation_clips_array();
 

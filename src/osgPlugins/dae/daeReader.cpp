@@ -13,7 +13,7 @@
 
 #include "daeReader.h"
 #include <dae.h>
-#include <dae/domAny.h>
+#include <dom/domAny.h>
 #include <dom/domCOLLADA.h>
 #include <dom/domInstanceWithExtra.h>
 #include <dom/domConstants.h>
@@ -21,6 +21,7 @@
 #include <osg/PositionAttitudeTransform>
 
 using namespace osgDAE;
+using namespace ColladaDOM141;
 
 daeReader::Options::Options() :
     strictTransparency(false),
@@ -43,7 +44,7 @@ daeReader::daeReader(DAE *dae_, const Options * pluginOptions) :
                   _pluginOptions(pluginOptions ? *pluginOptions : Options()),
                   _assetUnitName("meter"),
                   _assetUnitMeter(1.0),
-                  _assetUp_axis(UPAXISTYPE_Y_UP)
+                  _assetUp_axis(ColladaDOM141::UPAXISTYPE_Y_UP)
 {
 }
 
@@ -112,8 +113,8 @@ bool daeReader::processDocument( const std::string& fileURI)
             _assetUp_axis = _document->getAsset()->getUp_axis()->getValue();
     }
 
-    domInstanceWithExtra *ivs = _document->getScene()->getInstance_visual_scene();
-    _visualScene = daeSafeCast< domVisual_scene >( getElementFromURI( ivs->getUrl() ) );
+    ColladaDOM141::domInstanceWithExtra *ivs = _document->getScene()->getInstance_visual_scene();
+    _visualScene = daeSafeCast< ColladaDOM141::domVisual_scene >( getElementFromURI( ivs->getUrl() ) );
     if ( _visualScene == NULL )
     {
         OSG_WARN << "Unable to locate visual scene!" << std::endl;
@@ -137,7 +138,7 @@ bool daeReader::processDocument( const std::string& fileURI)
                 pDomInstanceRigidBody = daeSafeCast<domInstance_rigid_body>(colladaElement);
                 if (pDomInstanceRigidBody)
                 {
-                    domNode *node = daeSafeCast<domNode>(pDomInstanceRigidBody->getTarget().getElement());
+                    ColladaDOM141::domNode *node = daeSafeCast<domNode>(pDomInstanceRigidBody->getTarget().getElement());
                     if (node && node->getId())
                     {
                         _targetMap[ std::string(node->getId()) ] = true;

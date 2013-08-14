@@ -30,8 +30,9 @@
 #include <osgAnimation/UpdateBone>
 
 using namespace osgDAE;
+using namespace ColladaDOM141;
 
-osg::Geode* daeReader::getOrCreateGeometry(domGeometry *pDomGeometry, domBind_material* pDomBindMaterial, const osg::Geode** ppOriginalGeode)
+osg::Geode* daeReader::getOrCreateGeometry(ColladaDOM141::domGeometry *pDomGeometry, ColladaDOM141::domBind_material* pDomBindMaterial, const osg::Geode** ppOriginalGeode)
 {
     // Check cache if geometry already exists
     osg::Geode* pOsgGeode;
@@ -85,7 +86,7 @@ osg::Geode* daeReader::getOrCreateGeometry(domGeometry *pDomGeometry, domBind_ma
     return pCopiedOsgGeode;
 }
 
-osgAnimation::Bone* daeReader::getOrCreateBone(domNode *pDomNode)
+osgAnimation::Bone* daeReader::getOrCreateBone(ColladaDOM141::domNode *pDomNode)
 {
     // Check cache if bone already exists
     osgAnimation::Bone *pOsgBone = NULL;
@@ -111,7 +112,7 @@ osgAnimation::Bone* daeReader::getOrCreateBone(domNode *pDomNode)
     return pOsgBone;
 }
 
-osgAnimation::Skeleton* daeReader::getOrCreateSkeleton(domNode *pDomNode)
+osgAnimation::Skeleton* daeReader::getOrCreateSkeleton(ColladaDOM141::domNode *pDomNode)
 {
     // Check cache if skeleton already exists
     osgAnimation::Skeleton *pOsgSkeleton = NULL;
@@ -131,7 +132,7 @@ osgAnimation::Skeleton* daeReader::getOrCreateSkeleton(domNode *pDomNode)
 
 
 
-osg::Geode* daeReader::processInstanceGeometry( domInstance_geometry *pDomInstanceGeometry )
+osg::Geode* daeReader::processInstanceGeometry( ColladaDOM141::domInstance_geometry *pDomInstanceGeometry )
 {
     domGeometry *pDomGeometry = daeSafeCast< domGeometry >(getElementFromURI(pDomInstanceGeometry->getUrl()));
     if (!pDomGeometry)
@@ -149,7 +150,7 @@ osg::Geode* daeReader::processInstanceGeometry( domInstance_geometry *pDomInstan
 //        2..*    <input semantic source>
 //        0..*    <extra>
 // 0..* <extra>
-osg::Node* daeReader::processMorph(domMorph* pDomMorph, domBind_material* pDomBindMaterial)
+osg::Node* daeReader::processMorph(domMorph* pDomMorph,ColladaDOM141::domBind_material* pDomBindMaterial)
 {
     domGeometry* pDomGeometry = daeSafeCast< domGeometry >(getElementFromURI( pDomMorph->getSource()));
 

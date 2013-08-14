@@ -21,6 +21,7 @@
 #include <sstream>
 #include <osgDB/ConvertUTF>
 
+using namespace ColladaDOM141;
 
 namespace osgDAE {
 

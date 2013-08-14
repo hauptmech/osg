@@ -11,7 +11,7 @@
 # $COLLADA_DIR is an environment variable that would
 # correspond to the ./configure --prefix=$COLLADA_DIR
 #
-# Created by Robert Osfield. 
+# Created by Robert Osfield.
 
 
 # Check if COLLADA_DIR is set, otherwise use ACTUAL_3DPARTY_DIR:
@@ -57,6 +57,7 @@ FIND_PATH(COLLADA_INCLUDE_DIR dae.h
     /usr/include/
     /usr/include/colladadom
     /usr/include/collada-dom
+    /usr/include/collada-dom2.4
     /sw/include # Fink
     /opt/local/include # DarwinPorts
     /opt/csw/include # Blastwave
@@ -65,8 +66,8 @@ FIND_PATH(COLLADA_INCLUDE_DIR dae.h
     ${ACTUAL_3DPARTY_DIR}/include
 )
 
-FIND_LIBRARY(COLLADA_DYNAMIC_LIBRARY 
-    NAMES collada_dom collada14dom Collada14Dom libcollada14dom21 libcollada14dom22
+FIND_LIBRARY(COLLADA_DYNAMIC_LIBRARY
+    NAMES collada_dom collada14dom Collada14Dom libcollada14dom21 libcollada14dom22 collada-dom2.4-dp
     PATHS
     ${COLLADA_DOM_ROOT}/build/${COLLADA_BUILDNAME}-1.4
     $ENV{COLLADA_DIR}/build/${COLLADA_BUILDNAME}-1.4
@@ -74,7 +75,7 @@ FIND_LIBRARY(COLLADA_DYNAMIC_LIBRARY
     $ENV{COLLADA_DIR}/lib-dbg
     $ENV{COLLADA_DIR}
     ~/Library/Frameworks
-    /Library/Frameworks    
+    /Library/Frameworks
     /opt/local/Library/Frameworks #macports
     /usr/local/lib
     /usr/local/lib64
@@ -88,7 +89,7 @@ FIND_LIBRARY(COLLADA_DYNAMIC_LIBRARY
     ${ACTUAL_3DPARTY_DIR}/lib
 )
 
-FIND_LIBRARY(COLLADA_DYNAMIC_LIBRARY_DEBUG 
+FIND_LIBRARY(COLLADA_DYNAMIC_LIBRARY_DEBUG
     NAMES collada_dom-d collada14dom-d Collada14Dom-d libcollada14dom21-d libcollada14dom22-d
     PATHS
     ${COLLADA_DOM_ROOT}/build/${COLLADA_BUILDNAME}-1.4-d
@@ -111,7 +112,7 @@ FIND_LIBRARY(COLLADA_DYNAMIC_LIBRARY_DEBUG
     ${ACTUAL_3DPARTY_DIR}/lib
 )
 
-FIND_LIBRARY(COLLADA_STATIC_LIBRARY 
+FIND_LIBRARY(COLLADA_STATIC_LIBRARY
     NAMES libcollada14dom21-s  libcollada14dom22-s libcollada14dom.a
     PATHS
     ${COLLADA_DOM_ROOT}/build/${COLLADA_BUILDNAME}-1.4
@@ -134,7 +135,7 @@ FIND_LIBRARY(COLLADA_STATIC_LIBRARY
     ${ACTUAL_3DPARTY_DIR}/lib
 )
 
-FIND_LIBRARY(COLLADA_STATIC_LIBRARY_DEBUG 
+FIND_LIBRARY(COLLADA_STATIC_LIBRARY_DEBUG
     NAMES collada_dom-sd collada14dom-sd libcollada14dom21-sd libcollada14dom22-sd libcollada14dom-d.a
     PATHS
     ${COLLADA_DOM_ROOT}/build/${COLLADA_BUILDNAME}-1.4-d
@@ -173,7 +174,7 @@ FIND_LIBRARY(COLLADA_STATIC_LIBRARY_DEBUG
             )
         ENDIF(WIN32)
     ENDIF(LIBXML2_FOUND)
-    
+
     FIND_PACKAGE(ZLIB)
     IF (ZLIB_FOUND)
         SET(COLLADA_ZLIB_LIBRARY "${ZLIB_LIBRARY}" CACHE FILEPATH "" FORCE)
@@ -242,7 +243,7 @@ FIND_LIBRARY(COLLADA_STATIC_LIBRARY_DEBUG
     )
 
     FIND_LIBRARY(COLLADA_BOOST_FILESYSTEM_LIBRARY
-        NAMES libboost_filesystem boost_filesystem boost_filesystem-mt libboost_filesystem-${COLLADA_BUILDNAME}0-mt libboost_filesystem-${COLLADA_BUILDNAME}0-mt-1_54 
+        NAMES libboost_filesystem boost_filesystem boost_filesystem-mt libboost_filesystem-${COLLADA_BUILDNAME}0-mt libboost_filesystem-${COLLADA_BUILDNAME}0-mt-1_54
         PATHS
         ${COLLADA_DOM_ROOT}/external-libs/boost/lib/${COLLADA_BUILDNAME}
         ${COLLADA_DOM_ROOT}/external-libs/boost/lib/mingw
@@ -250,7 +251,7 @@ FIND_LIBRARY(COLLADA_STATIC_LIBRARY_DEBUG
     )
 
     FIND_LIBRARY(COLLADA_BOOST_FILESYSTEM_LIBRARY_DEBUG
-        NAMES libboost_filesystem-d boost_filesystem-d boost_filesystem-mt-d libboost_filesystem-${COLLADA_BUILDNAME}0-mt-gd libboost_filesystem-${COLLADA_BUILDNAME}0-mt-gd-1_54 
+        NAMES libboost_filesystem-d boost_filesystem-d boost_filesystem-mt-d libboost_filesystem-${COLLADA_BUILDNAME}0-mt-gd libboost_filesystem-${COLLADA_BUILDNAME}0-mt-gd-1_54
         PATHS
         ${COLLADA_DOM_ROOT}/external-libs/boost/lib/${COLLADA_BUILDNAME}
         ${COLLADA_DOM_ROOT}/external-libs/boost/lib/mingw
@@ -258,7 +259,7 @@ FIND_LIBRARY(COLLADA_STATIC_LIBRARY_DEBUG
     )
 
     FIND_LIBRARY(COLLADA_BOOST_SYSTEM_LIBRARY
-        NAMES libboost_system boost_system boost_system-mt libboost_system-${COLLADA_BUILDNAME}0-mt libboost_system-${COLLADA_BUILDNAME}0-mt-1_54 
+        NAMES libboost_system boost_system boost_system-mt libboost_system-${COLLADA_BUILDNAME}0-mt libboost_system-${COLLADA_BUILDNAME}0-mt-1_54
         PATHS
         ${COLLADA_DOM_ROOT}/external-libs/boost/lib/${COLLADA_BUILDNAME}
         ${COLLADA_DOM_ROOT}/external-libs/boost/lib/mingw
@@ -266,7 +267,7 @@ FIND_LIBRARY(COLLADA_STATIC_LIBRARY_DEBUG
     )
 
     FIND_LIBRARY(COLLADA_BOOST_SYSTEM_LIBRARY_DEBUG
-        NAMES libboost_system-d boost_system-d boost_system-mt-d libboost_system-${COLLADA_BUILDNAME}0-mt-gd libboost_system-${COLLADA_BUILDNAME}0-mt-gd-1_54 
+        NAMES libboost_system-d boost_system-d boost_system-mt-d libboost_system-${COLLADA_BUILDNAME}0-mt-gd libboost_system-${COLLADA_BUILDNAME}0-mt-gd-1_54
         PATHS
         ${COLLADA_DOM_ROOT}/external-libs/boost/lib/${COLLADA_BUILDNAME}
         ${COLLADA_DOM_ROOT}/external-libs/boost/lib/mingw
